@@ -5,12 +5,11 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const creds = {};
-
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+// frontend
 app.get("/", async (req, res) => {
   const html = await fs.readFile("./views/index.html", "utf8");
   return res.send(html);
@@ -20,6 +19,13 @@ app.get("/signup", async (req, res) => {
   return res.send(html);
 });
 
+app.get("/callback", async (req, res) => {
+  console.log({ query: req.query, body: req.body });
+  const userHtml = await fs.readFile("./views/user.html", "utf8");
+  return res.send(userHtml);
+});
+
+// api
 app.post("/login", async (req, res) => {
   const { code } = req.body;
   console.log({ code });
@@ -55,13 +61,6 @@ app.post("/login", async (req, res) => {
     });
   const token = jwt.sign({ ...userData.data }, process.env.JWT_SECRET);
   return res.json({ token });
-});
-
-// frontend
-app.get("/callback", async (req, res) => {
-  console.log({ query: req.query, body: req.body });
-  const userHtml = await fs.readFile("./views/user.html", "utf8");
-  return res.send(userHtml);
 });
 
 app.listen(3000, () => console.log("Running at port 3000"));
