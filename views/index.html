@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>JWT Token Check</title>
+</head>
+
+<body>
+  <h1>Email: <span id="email"></span></h1>
+  <img id="picture" src="">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonwebtoken/9.0.1/index.js"
+    integrity="sha512-RXL0bGpRhGqIgv9FZ4AneJDhu45H8APjVTTUhRlEHaFkooaz1PNor74q2OB/jmq/XunG3qwZB1jaAHNZ1O9niA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const token = localStorage.getItem('token');
+
+    // If there is no token, redirect to signup page
+    if (!token) {
+      window.location.href = '/signup';
+    }
+
+    // Decode the token
+    const decodeToken = parseJwt(token);
+
+    // Display the decoded data
+    console.log({ decodeToken });
+    const userEmail = decodeToken.email;
+    document.getElementById('email').innerHTML = userEmail;
+    document.getElementById("picture").src = decodeToken.picture;
+
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      return JSON.parse(jsonPayload);
+    }
+  </script>
+  <div id="username"></div>
+  <div id="email"></div>
+</body>
+
+</html>
