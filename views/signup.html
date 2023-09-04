@@ -6,44 +6,16 @@
     <h1>Google OAuth2 Test</h1>
     <button id="authorize-btn">Authorize</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script>
+      // It's okay to put clientId here, it isn't a secret.
       const clientId = "795467457363-galo4soirvlgicinua34e70qh72lt8kr.apps.googleusercontent.com";
       const scopes = [ "email"];
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=http://localhost:3000/callback&response_type=code&scope=${scopes.join(
         ","
       )}`;
-
       document
         .getElementById("authorize-btn")
-        .addEventListener("click", async () => {
-          try {
-            // const response = await axios.get(authUrl);
+        .addEventListener("click", () => {          
             window.location = authUrl;
-            // const code = response.query.code;
-
-            // const tokenUrl = `https://oauth2.googleapis.com/token?client_id=${clientId}&redirect_uri=http://localhost:3000/callback&grant_type=authorization_code&code=${code}&scope=${scopes.join(
-            //   ","
-            // )}`;
-            // const tokenResponse = await axios.post(tokenUrl, null, {
-            //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            // });
-            // const accessToken = tokenResponse.data.access_token;
-
-            // const userInfoUrl = `https://openidconnect.googleapis.com/v1/userinfo?access_token=${accessToken}`;
-            // const userInfoResponse = await axios.get(userInfoUrl);
-
-            // const username = userInfoResponse.data.username;
-            // const email = userInfoResponse.data.email;
-
-            // console.log(`Logged in as ${username} (${email})`);
-
-            // // Use the access token to make API calls on behalf of the user
-            // // const apiUrl = `https://www.googleapis.com/drive/v3/files?access_token=${accessToken}`;
-            // // const apiResponse = await axios.get(apiUrl);
-
-            // console.log(apiResponse.data);
-          } catch (error) {
-            console.error(error);
-          }
         });
     </script>
   </body>
